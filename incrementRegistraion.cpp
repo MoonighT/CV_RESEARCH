@@ -66,10 +66,10 @@ typedef pcl::PointNormal PointNormalT;
 typedef pcl::PointCloud<PointNormalT> PointCloudWithNormals;
 
 // This is a tutorial so we can afford having global variables 
-	//our visualizer
-	pcl::visualization::PCLVisualizer *p;
-	//its left and right viewports
-	int vp_1, vp_2;
+    //our visualizer
+    pcl::visualization::PCLVisualizer *p;
+    //its left and right viewports
+    int vp_1, vp_2;
 
 //convenient structure to handle our pointclouds
 struct PCD
@@ -279,12 +279,12 @@ void pairAlign (const PointCloud::Ptr cloud_src, const PointCloud::Ptr cloud_tgt
     reg.setInputSource (points_with_normals_src);
     reg.align (*reg_result);
 
-		//accumulate transformation between each Iteration
+        //accumulate transformation between each Iteration
     Ti = reg.getFinalTransformation () * Ti;
 
-		//if the difference between this transformation and the previous one
-		//is smaller than the threshold, refine the process by reducing
-		//the maximal correspondence distance
+        //if the difference between this transformation and the previous one
+        //is smaller than the threshold, refine the process by reducing
+        //the maximal correspondence distance
     if (fabs ((reg.getLastIncrementalTransformation () - prev).sum ()) < reg.getTransformationEpsilon ())
       reg.setMaxCorrespondenceDistance (reg.getMaxCorrespondenceDistance () - 0.001);
     
@@ -294,7 +294,7 @@ void pairAlign (const PointCloud::Ptr cloud_src, const PointCloud::Ptr cloud_tgt
     showCloudsRight(points_with_normals_tgt, points_with_normals_src);
   }
 
-	//
+    //
   // Get the transformation from target to source
   targetToSource = Ti.inverse();
 
@@ -310,7 +310,7 @@ void pairAlign (const PointCloud::Ptr cloud_src, const PointCloud::Ptr cloud_tgt
   p->addPointCloud (output, cloud_tgt_h, "target", vp_2);
   p->addPointCloud (cloud_src, cloud_src_h, "source", vp_2);
 
-	PCL_INFO ("Press q to continue the registration.\n");
+    PCL_INFO ("Press q to continue the registration.\n");
   p->spin ();
 
   p->removePointCloud ("source"); 
@@ -349,7 +349,7 @@ int main (int argc, char** argv)
   p->createViewPort (0.0, 0, 0.5, 1.0, vp_1);
   p->createViewPort (0.5, 0, 1.0, 1.0, vp_2);
 
-	PointCloud::Ptr result (new PointCloud), source, target;
+    PointCloud::Ptr result (new PointCloud), source, target;
   Eigen::Matrix4f GlobalTransform = Eigen::Matrix4f::Identity (), pairTransform;
   
   for (size_t i = 1; i < data.size (); ++i)
@@ -373,7 +373,7 @@ int main (int argc, char** argv)
     //update the global transform
     GlobalTransform = pairTransform * GlobalTransform;
 
-		//save aligned pair, transformed into the first cloud's frame
+        //save aligned pair, transformed into the first cloud's frame
     std::stringstream ss;
     ss << i << ".pcd";
     pcl::io::savePCDFile (ss.str (), *result, true);
